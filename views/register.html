@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse - Sistema de Agua</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">💧</div>
+                <h1 class="auth-title">Crear Cuenta</h1>
+                <p class="auth-subtitle">Regístrate para comenzar</p>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="nombre" class="form-label required">Nombre Completo</label>
+                    <input 
+                        type="text" 
+                        id="nombre" 
+                        name="nombre" 
+                        class="form-control" 
+                        placeholder="Juan Pérez"
+                        required
+                        minlength="3">
+                </div>
+
+                <div class="form-group">
+                    <label for="correo" class="form-label required">Correo Electrónico</label>
+                    <input 
+                        type="email" 
+                        id="correo" 
+                        name="correo" 
+                        class="form-control" 
+                        placeholder="tu@correo.com"
+                        required
+                        autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input 
+                        type="tel" 
+                        id="telefono" 
+                        name="telefono" 
+                        class="form-control" 
+                        placeholder="6181234567"
+                        pattern="[0-9]{10}">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label required">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-control" 
+                        placeholder="••••••••"
+                        required
+                        minlength="6"
+                        autocomplete="new-password">
+                    <small style="color: #666;">Mínimo 6 caracteres</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password2" class="form-label required">Confirmar Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="password2" 
+                        name="password2" 
+                        class="form-control" 
+                        placeholder="••••••••"
+                        required
+                        minlength="6"
+                        autocomplete="new-password">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    Registrarse
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                ¿Ya tienes cuenta? 
+                <a href="login.html">Inicia sesión aquí</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/app.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const password = formData.get('password');
+            const password2 = formData.get('password2');
+            
+            if (password !== password2) {
+                showAlert('Las contraseñas no coinciden', 'danger');
+                return;
+            }
+            
+            const datos = {
+                nombre: formData.get('nombre'),
+                correo: formData.get('correo'),
+                telefono: formData.get('telefono'),
+                password: password
+            };
+            
+            await register(datos);
+        });
+    </script>
+</body>
+</html>
